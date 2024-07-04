@@ -5,7 +5,7 @@
 import re
 from typing import List
 import logging
-from os import environ
+import os
 import mysql.connector
 
 
@@ -57,14 +57,37 @@ def get_logger() -> logging.Logger:
 
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
-    """ Returns a connector to a MySQL database """
-    username = environ.get("PERSONAL_DATA_DB_USERNAME", "root")
-    password = environ.get("PERSONAL_DATA_DB_PASSWORD", "")
-    host = environ.get("PERSONAL_DATA_DB_HOST", "localhost")
-    db_name = environ.get("PERSONAL_DATA_DB_NAME")
+    """
+        function that returns a connector to the database
+    """
+    db_username = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
+    db_password = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
+    db_host = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
+    db_name = os.getenv("PERSONAL_DATA_DB_NAME")
+    db_connection = mysql.connector.connection.MySQLConnection(
+        user=db_username,
+        password=db_password,
+        host=db_host,
+        database=db_name
+        )
+    return db_connection
 
-    cnx = mysql.connector.connection.MySQLConnection(user=username,
-                                                     password=password,
-                                                     host=host,
-                                                     database=db_name)
-    return cnx
+
+def main():
+    """
+Main file
+"""
+
+get_db = __import__('filtered_logger').get_db
+
+db = get_db()
+cursor = db.cursor()
+cursor.execute("SELECT COUNT(*) FROM users;")
+for row in cursor:
+    print(row[0])
+cursor.close()
+db.close()
+
+
+if __name__ == "__main__":
+    main()
