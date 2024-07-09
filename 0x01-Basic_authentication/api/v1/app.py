@@ -42,7 +42,7 @@ def statuscode(error) -> str:
 
 @app.before_request
 def before_request():
-    """Before  request handler"""
+    """Before request handler"""
     if auth is None:
         return
 
@@ -52,13 +52,10 @@ def before_request():
     if request.path in excluded_paths:
         return
     if not auth.require_auth(request.path, excluded_paths):
-        abort(401)
-
-    if auth.authorization_header(request) is None:
-        abort(401)
-
-    if auth.current_user(request) is None:
-        abort(403)
+        if auth.authorization_header(request) is None:
+            abort(401)
+        if auth.current_user(request) is None:
+            abort(403)
 
 
 if __name__ == "__main__":
