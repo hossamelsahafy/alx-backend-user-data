@@ -7,14 +7,16 @@ from typing import List, TypeVar
 
 class Auth:
     """Define Auth Class"""
-    def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
+    def require_auth(self, path: str,
+                     excluded_paths: List[str]) -> bool:
         """Return False for excluded paths, True otherwise"""
         if path is None:
             return True
         if not excluded_paths or len(excluded_paths) == 0:
             return True
         for excluded_path in excluded_paths:
-            if excluded_path.endswith('*') and path.startswith(excluded_path[:-1]):
+            wildcard = excluded_path[:-1]
+            if excluded_path.endswith('*') and path.startswith(wildcard):
                 return False
             elif path == excluded_path:
                 return False
