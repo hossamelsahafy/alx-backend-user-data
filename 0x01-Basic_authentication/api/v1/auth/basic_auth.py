@@ -95,7 +95,8 @@ class BasicAuth(Auth):
             return None
         
         user_credentials = self.extract_user_credentials(decoded_creds)
-        if not user_credentials:
-            return None
-        
-        return self.user_object_from_credentials(user_credentials)
+        user_email = user_credentials[0]
+        user_password = user_credentials[1]
+        user_credentials = self.user_object_from_credentials(
+            user_email, user_password)
+        return user_credentials
