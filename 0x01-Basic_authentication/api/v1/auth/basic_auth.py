@@ -52,7 +52,6 @@ class BasicAuth(Auth):
         parts = de_b64_auth_head.split(':', 1)
         if len(parts) != 2:
             return None, None
-    
         email, password = parts
         return email, password
 
@@ -66,7 +65,6 @@ class BasicAuth(Auth):
             user_email, str) or user_pwd is None or not isinstance(
                 user_pwd, str):
             return None
-
         try:
             users = User.search({'email': user_email})
         except Exception:
