@@ -49,9 +49,11 @@ class BasicAuth(Auth):
             return None, None
         if not isinstance(de_b64_auth_head, str):
             return None, None
-        if ':' not in de_b64_auth_head:
+        parts = de_b64_auth_head.split(':', 1)
+        if len(parts) != 2:
             return None, None
-        email, password = de_b64_auth_head.split(':', 1)
+    
+        email, password = parts
         return email, password
 
     def user_object_from_credentials(self, user_email: str,
