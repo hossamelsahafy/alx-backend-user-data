@@ -5,10 +5,6 @@ from models.user_session import UserSession
 
 class SessionDBAuth(SessionExpAuth):
     """Define SessionDBAuth Class"""
-    def __init__(self):
-        """Initialize SessionDBAuth Class"""
-        super().__init__()
-
     def create_session(self, user_id=None):
         """Create Session Method"""
         session_id = super().create_session(user_id)
