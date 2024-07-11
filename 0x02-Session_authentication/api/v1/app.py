@@ -51,7 +51,7 @@ def before_request():
         return
 
     request_path_list = [
-        '/api/v1/status/',
+        '/api/v1/status',
         '/api/v1/unauthorized/',
         '/api/v1/forbidden/']
     if auth:
@@ -60,7 +60,7 @@ def before_request():
                 abort(401)
             if auth.current_user(request) is None:
                 abort(403)
-        request.current_user = auth.current_user(request)
+            request.current_user = auth.current_user(request)
 
 
 if __name__ == "__main__":
