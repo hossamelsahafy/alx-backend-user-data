@@ -54,7 +54,7 @@ def before_request():
         return
 
     request_path_list = [
-        '/api/v1/status/',
+        '/api/v1/status',
         '/api/v1/unauthorized/',
         '/api/v1/forbidden/']
     if auth:
