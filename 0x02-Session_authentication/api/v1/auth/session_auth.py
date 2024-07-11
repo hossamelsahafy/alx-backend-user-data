@@ -46,10 +46,10 @@ class SessionAuth(Auth):
         """
             deletes the user session / logout
         """
-        if request == None:
+        if request is None:
             return False
         session_id = self.session_cookie(request)
-        if request not in session_id:
+        if not session_id:
             return False
         user = self.user_id_for_session_id(session_id)
         if not user:

@@ -36,6 +36,7 @@ def login():
 
     return response, 200
 
+
 @app_views.route('/auth_session/logout/',
                  methods=['DELETE'],
                  strict_slashes=False)
