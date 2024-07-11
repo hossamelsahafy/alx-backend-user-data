@@ -47,27 +47,24 @@ def statuscode(error) -> str:
     return jsonify({"error": "Forbidden"}), 403
 
 
-request_path_list = [
-    '/api/v1/status',
-    '/api/v1/unauthorized/',
-    '/api/v1/forbidden/',
-    '/api/v1/auth_session/login/'
-]
-
-
 @app.before_request
 def before_request():
     """Before request handler"""
     if auth is None:
         return
 
-    if auth.require_auth(request.path, request_path_list):
-        cookie = auth.session_cookie(request)
-        if auth.authorization_header(request) is None or cookie is None:
-            abort(401)
-        if auth.current_user(request) is None:
-            abort(403)
-        request.current_user = auth.current_user(request)
+    request_path_list = [
+        '/api/v1/status',
+        '/api/v1/unauthorized/',
+        '/api/v1/forbidden/',
+        '/api/v1/auth_session/login/']
+    if auth:
+        if auth.require_auth(request.path, request_path_list):
+            if auth.authorization_header(request) is None and auth.session_cookie(request) is None:
+                abort(401)
+            if auth.current_user(request) is None:
+                abort(403)
+            request.current_user = auth.current_user(request)
 
 
 if __name__ == "__main__":
