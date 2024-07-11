@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from api.v1.auth.session_exp_auth import SessionExpAuth
 from models.user_session import UserSession
 
+
 class SessionDBAuth(SessionExpAuth):
     """Define SessionDBAuth Class"""
     def create_session(self, user_id=None):
