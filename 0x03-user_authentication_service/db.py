@@ -56,5 +56,6 @@ class DB:
         """Update a user's attributes"""
         user = self.find_user_by(id = user_id)
         for key, value in kwargs.items():
-            setattr(user, key, value)
+            if hasattr(key, value):
+                setattr(user, key, value)
         self._session.commit()
