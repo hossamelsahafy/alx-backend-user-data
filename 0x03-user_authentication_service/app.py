@@ -11,13 +11,13 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['GET'])
-def basic():
+def basic() -> str:
     """Basic Flask App Function"""
     return jsonify({"message": "Bienvenue"})
 
 
 @app.route('/users', methods=['POST'])
-def create_user():
+def create_user() -> str:
     """Create User"""
     email = request.form.get('email')
     password = request.form.get('password')
@@ -25,7 +25,7 @@ def create_user():
         return jsonify({"message": "email or password missing"}), 400
     try:
         user = AUTH.register_user(email, password)
-        return jsonify({"email": user.email, "message": "user created"}), 201
+        return jsonify({"email": email, "message": "user created"}), 201
     except ValueError:
         return jsonify({"message": "email already registered"}), 400
 
