@@ -17,14 +17,14 @@ def basic() -> str:
 
 
 @app.route('/users', methods=['POST'])
-def create_user() -> str:
+def users() -> str:
     """Create User"""
     email = request.form.get('email')
     password = request.form.get('password')
     if not email or not password:
         return jsonify({"message": "email or password missing"}), 400
     try:
-        user = AUTH.register_user(email, password)
+        AUTH.register_user(email, password)
         return jsonify({"email": email, "message": "user created"}), 201
     except ValueError:
         return jsonify({"message": "email already registered"}), 400
