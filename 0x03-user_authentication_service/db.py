@@ -55,8 +55,10 @@ class DB:
     def update_user(self, user_id: int, **kwargs) -> None:
         """Update a user's attributes."""
         user = self.find_user_by(id=user_id)
+        user_keys = ['id', 'email', 'hashed_password', 'session_id',
+                     'reset_token']
         for key, value in kwargs.items():
-            if hasattr(User, key):
+            if key in user_keys:
                 setattr(user, key, value)
             else:
                 raise ValueError
