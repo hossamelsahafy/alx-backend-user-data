@@ -40,16 +40,15 @@ class DB:
         return new_user
 
     def find_user_by(self, **kwargs) -> User:
+        """Returns first rrow found in users table
+        as filtered by methods input arguments
         """
-            returns the first row found in the users table
-        """
-        try:
-            query = self._session.query(User).filter_by(**kwargs)
-            user = query.first()
-            if user is None:
-                raise NoResultFound
-            return user
-        except NoResultFound as e:
+        user_keys = ['id', 'email', 'hashed_password', 'session_id',
+                     'reset_token']
+        for key in kwargs.keys():
+            if key not in user_keys:
+                raise InvalidRequestError
+        result = self._session.query(User).filter_by(**kwargs).first()
+        if result is None:
             raise NoResultFound
-        except InvalidRequestError as e:
-            raise InvalidRequestError
+        return result
