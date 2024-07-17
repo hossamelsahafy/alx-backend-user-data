@@ -53,7 +53,6 @@ class DB:
             raise e
 
     def update_user(self, user_id: int, **kwargs) -> None:
-        """Update a user's attributes."""
         user = self.find_user_by(id=user_id)
         user_keys = ['id', 'email', 'hashed_password', 'session_id',
                      'reset_token']
