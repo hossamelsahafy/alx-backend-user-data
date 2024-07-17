@@ -41,7 +41,9 @@ class DB:
         return new_user
 
     def find_user_by(self, **kwargs) -> User:
-        """Find User"""
+        """
+            Find a user by id
+        """
         try:
             query = self._session.query(User).filter_by(**kwargs)
             user = query.first()
@@ -55,19 +57,11 @@ class DB:
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """
-            Updates a user based on id
+            Update User Based On Id
         """
         user = self.find_user_by(id=user_id)
-        if user is None:
-            return
-        update_source = {}
         for key, value in kwargs.items():
-            if hasattr(User, key):
-                update_source[getattr(User, key)] = value
-            else:
-                raise ValueError()
-        self._session.query(User).filter(User.id == user_id).update(
-            update_source,
-            synchronize_session=False,
-        )
+            if not hasattr(user, key):
+                raise ValueError
+            setattr(user, key, value)
         self._session.commit()
