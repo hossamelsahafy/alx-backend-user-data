@@ -7,6 +7,7 @@ from sqlalchemy.orm.exc import NoResultFound
 import uuid
 from typing import Union
 
+
 def _hash_password(password: str) -> bytes:
     """Hash Password"""
     salt = bcrypt.gensalt()
@@ -61,3 +62,4 @@ class Auth:
             return None
         user = self._db.find_user_by(session_id=session_id)
         return user if user else None
+
