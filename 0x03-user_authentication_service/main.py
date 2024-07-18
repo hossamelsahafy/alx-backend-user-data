@@ -4,7 +4,6 @@ Main file
 """
 from auth import Auth
 
-
 EMAIL = "guillaume@holberton.io"
 PASSWD = "b4l0u"
 NEW_PASSWD = "t4rt1fl3tt3"
