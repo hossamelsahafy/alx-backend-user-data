@@ -95,12 +95,12 @@ def update_password() -> str:
     """Update Password Method"""
     try:
         email = request.form.get("email")
-        reset_token = request.form.get("reset_token")
-        new_password = request.form.get("new_password")
+        reset_token = request.form["reset_token"]
+        new_password = request.form["new_password"]
     except KeyError:
         abort(400)
     try:
-        AUTH.update_password(email, reset_token, new_password)
+        AUTH.update_password(reset_token, new_password)
     except ValueError:
         abort(403)
     message = {"email": email, "message": "Password updated"}
