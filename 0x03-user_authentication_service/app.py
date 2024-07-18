@@ -39,15 +39,11 @@ def login() -> str:
         password = request.form.get("password")
     except KeyError:
         abort(400)
-
     if not AUTH.valid_login(email, password):
         abort(401)
-
     session_id = AUTH.create_session(email)
-
     massage = {"email": email, "message": "logged in"}
     res = jsonify(massage)
-
     res.set_cookie("session_id", session_id)
     return res
 
